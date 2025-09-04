@@ -1,0 +1,78 @@
+<template>
+    <div class="page" style="">
+        <image src="/common/more.png" @click="tomore" style="margin-top: 6px;"/>
+        <div class="item" @click="tolearn">
+            <text class="bigt">Learn</text>
+            <text class="smallt">{{learnn}}</text>
+        </div>
+        <div class="item" style="margin-top: 8px">
+            <text class="bigt">Review</text>
+            <text class="smallt">{{reviewn}}</text>
+        </div>
+    </div>
+</template>
+
+<script>
+import router from '@system.router'
+import storage from '@system.storage' 
+export default {
+    data: {
+        learnn: '',
+        reviewn: ''
+    },
+    tolearn() {
+        router.push({
+          uri: '/pages/learn'
+        })
+    },
+    tomore() {
+        router.push({
+          uri: '/pages/more'
+        })
+    },
+    toreview() {
+        router.push({
+          uri: '/pages/review'
+        })
+    },
+};
+</script>
+
+<style>
+.page {
+left: 0px;
+top: 0px;
+width: 192px;
+height: 490px;
+background-color: black;
+align-items: center;
+flex-direction: column;
+}
+.item {
+margin-top: 6px;
+width: 192px;
+height: 110px;
+background-color: #262626ff;
+border-radius: 27px;
+flex-direction: column;
+justify-content: space-between
+}
+.bigt {
+left: 11px;
+top: 12px;
+font-size: 32px;
+width: 100%;
+font-weight: bold;
+color: white;
+}
+.smallt {
+left: 11px;
+bottom: 9px;
+font-size: 28px;
+width: 100%;
+font-weight: bold;
+color: #ffffff99;
+text-overflow: ellipsis;
+lines: 1;
+}
+</style>

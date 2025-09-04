@@ -1,0 +1,74 @@
+{
+    "word": [
+        {
+            "name": "apple",
+            "sound": "/ˈæp(ə)l/",
+            "mean": "n.苹果",
+            "examp": "She crunched her apple noisily.",
+            "exampmean": "她嘎嘣脆地吃苹果"
+        },
+        {
+            "name": "textbook",
+            "sound": "/tekstbuk/",
+            "mean": "n. 教科书;课本",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "conversation",
+            "sound": "/kɔnvəseɪʃn/",
+            "mean": "n. 交谈;谈话",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "aloud",
+            "sound": "/əlaud/",
+            "mean": "adv. 大声地;出声地",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "pronunciation",
+            "sound": "/prənʌnsieIʃn/",
+            "mean": "n. 发音;读音",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "sentence",
+            "sound": "/sentəns/",
+            "mean": "n. 句子",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "patient",
+            "sound": "/peiʃnt/",
+            "mean": "adj. 有耐心的 n. 病人",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "expression",
+            "sound": "/ikspreʃn/",
+            "mean": "n. 表达(方式);表示",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "discover",
+            "sound": "/dIskʌvə (r)/",
+            "mean": "v. 发现;发觉",
+            "examp": " ",
+            "exampmean": " "
+        },
+        {
+            "name": "secret",
+            "sound": "/si:krət/",
+            "mean": "n. 秘密;adj. 秘密的",
+            "examp": " ",
+            "exampmean": " "
+        }
+    ]
+}

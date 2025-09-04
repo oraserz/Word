@@ -1,0 +1,108 @@
+<template>
+    <div class="page">
+        <image src="/common/back.png" class="backbtn"></image>
+        <text class="wordname" show="{{isshow}}">{{word.name}}</text>
+        <text class="sound phonetic" show="{{isshow}}">{{word.sound}}</text>
+        <div class="examp" show="{{isshow}}">
+            <text class="exampt" style="margin-top:10px">{{word.mean}}</text>
+            <text class="exampt">{{word.examp}}</text>
+        </div>
+        <image src="/common/V.png" style="margin-bottom: 6px" @click='next'/>
+    </div>
+</template>
+
+<script>
+import file from '@system.file'
+import router from'@system.router'
+export default {
+    data: {
+        word: {
+          name: '',
+          sound: '',
+          mean: '',
+          examp: '',
+          exampmean: '',
+        },
+        wordArray: [],
+        currentIndex: 0,
+        isshow: false
+    },
+    onInit(){
+        file.readText({
+      uri: '/common/wordlist/1.txt',
+      success: (data) => {
+        let tex = JSON.parse(data.text);
+        this.wordArray = tex.word;
+        this.currentIndex = 0;
+        this.word = this.wordArray[this.currentIndex];
+        this.isshow = true
+      }
+    })
+    },
+    next() {
+    if (this.wordArray && this.currentIndex !== undefined) {
+        this.currentIndex = (this.currentIndex + 1) % this.wordArray.length;
+        this.word = this.wordArray[this.currentIndex];
+    }
+}
+};
+</script>
+
+<style>
+.wordname {
+position: relative;
+left: 0;
+width: 192px;
+font-size: 32px;
+font-weight: bold;
+color: white;
+text-align: center;
+margin-top: 8px;
+}
+.page {
+left: 0px;
+top: 0px;
+width: 192px;
+height: 490px;
+background-color: black;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+}
+.sound {
+position: relative;
+width: 192px;
+font-size: 28px;
+font-weight: bold;
+color: #ffffff99;
+text-align: center;
+}
+@font-face {
+    font-family: 'DoulosSIL';
+    src: url('/common/font.ttf');
+}
+.phonetic {
+    font-family: 'DoulosSIL';
+}
+.backbtn {
+position: relative;
+margin-top: 6px;
+}
+.examp {
+flex: 1;
+width: 192px;
+border-radius: 27px;
+background-color: #262626ff;
+margin-bottom: 6px;
+flex-direction: column;
+}
+.exampt {
+color: white;
+font-size: 24px;
+font-weight: bold;
+margin-top: 6px;
+text-align: left;
+margin-left: 11px;
+word-wrap: break-word;
+}
+</style>
