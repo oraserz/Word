@@ -18,7 +18,7 @@ jobs:
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "version=${VERSION}" >> $GITHUB_ENV
-          echo "BUILD_OUTPUT=com.isotope.2048.band.${VERSION}.rpk" >> $GITHUB_ENV
+          echo "BUILD_OUTPUT=com.orz.word.${VERSION}.rpk" >> $GITHUB_ENV
 
       # 1. 代码检出（保留完整git历史）
       - name: Checkout code
