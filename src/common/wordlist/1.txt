@@ -4,68 +4,68 @@
             "name": "apple",
             "sound": "/ˈæp(ə)l/",
             "mean": "n.苹果",
-            "examp": "She crunched her apple noisily.",
+            "examp": " ",
             "exampmean": "她嘎嘣脆地吃苹果"
         },
         {
             "name": "textbook",
-            "sound": "/tekstbuk/",
+            "sound": "/ˈtekstbʊk/",
             "mean": "n. 教科书;课本",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "conversation",
-            "sound": "/kɔnvəseɪʃn/",
+            "sound": "/ˌkɒnvəˈseɪʃ(ə)n/",
             "mean": "n. 交谈;谈话",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "aloud",
-            "sound": "/əlaud/",
+            "sound": "/əˈlaʊd/",
             "mean": "adv. 大声地;出声地",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "pronunciation",
-            "sound": "/prənʌnsieIʃn/",
+            "sound": "/prəˌnʌnsiˈeɪʃ(ə)n/",
             "mean": "n. 发音;读音",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "sentence",
-            "sound": "/sentəns/",
+            "sound": "/ˈsentəns/",
             "mean": "n. 句子",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "patient",
-            "sound": "/peiʃnt/",
+            "sound": "/ˈpeɪʃ(ə)nt/",
             "mean": "adj. 有耐心的 n. 病人",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "expression",
-            "sound": "/ikspreʃn/",
+            "sound": "/ɪkˈspreʃ(ə)n/",
             "mean": "n. 表达(方式);表示",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "discover",
-            "sound": "/dIskʌvə (r)/",
+            "sound": "/dɪˈskʌvə(r)/",
             "mean": "v. 发现;发觉",
             "examp": " ",
             "exampmean": " "
         },
         {
             "name": "secret",
-            "sound": "/si:krət/",
+            "sound": "/ˈsiːkrət/",
             "mean": "n. 秘密;adj. 秘密的",
             "examp": " ",
             "exampmean": " "
