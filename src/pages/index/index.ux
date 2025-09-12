@@ -44,7 +44,7 @@ left: 0px;
 top: 0px;
 width: 192px;
 height: 490px;
-background-color: black;
+background-color: #141218;
 align-items: center;
 flex-direction: column;
 }
@@ -52,8 +52,8 @@ flex-direction: column;
 margin-top: 6px;
 width: 192px;
 height: 110px;
-background-color: #262626ff;
-border-radius: 27px;
+background-color: #9fcaff;
+border-radius: 23px;
 flex-direction: column;
 justify-content: space-between
 }
@@ -63,7 +63,7 @@ top: 12px;
 font-size: 32px;
 width: 100%;
 font-weight: bold;
-color: white;
+color: #003258;
 }
 .smallt {
 left: 11px;
