@@ -44,7 +44,7 @@ left: 0px;
 top: 0px;
 width: 192px;
 height: 490px;
-background-color: #141218;
+background-color: #1A1C1E;
 align-items: center;
 flex-direction: column;
 }
@@ -76,3 +76,4 @@ text-overflow: ellipsis;
 lines: 1;
 }
 </style>
+
