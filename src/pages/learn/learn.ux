@@ -1,11 +1,11 @@
 <template>
     <div class="page">
         <image src="/common/back.png" class="backbtn"></image>
-        <text class="wordname" show="{{isshow}}">{{word.name}}</text>
-        <text class="sound phonetic" show="{{isshow}}">{{word.sound}}</text>
-        <div class="examp" show="{{isshow}}">
-            <text class="exampt" style="margin-top:10px">{{word.mean}}</text>
-            <text class="exampt">{{word.examp}}</text>
+        <text class="wordname"">{{word.name}}</text>
+        <text class="sound phonetic"">{{word.sound}}</text>
+        <div class="card">
+            <text class="t" style="margin-top:10px">{{word.mean}}</text>
+            <text class="t">{{word.examp}}</text>
         </div>
         <image src="/common/V.png" style="margin-bottom: 6px" @click='next'/>
     </div>
@@ -16,16 +16,9 @@ import file from '@system.file'
 import router from'@system.router'
 export default {
     data: {
-        word: {
-          name: '',
-          sound: '',
-          mean: '',
-          examp: '',
-          exampmean: '',
-        },
+        word: {},
         wordArray: [],
-        currentIndex: 0,
-        isshow: false
+        currentIndex: 0
     },
     onInit(){
         file.readText({
@@ -35,7 +28,6 @@ export default {
         this.wordArray = tex.word;
         this.currentIndex = 0;
         this.word = this.wordArray[this.currentIndex];
-        this.isshow = true
       }
     })
     },
@@ -52,7 +44,7 @@ export default {
 .wordname {
 position: relative;
 left: 0;
-width: 192px;
+width: 186px;
 font-size: 32px;
 font-weight: bold;
 color: white;
@@ -64,7 +56,7 @@ left: 0px;
 top: 0px;
 width: 192px;
 height: 490px;
-background-color: black;
+/*background-color: #1A1C1E;*/
 flex-direction: column;
 align-items: center;
 justify-content: space-between;
@@ -74,7 +66,7 @@ position: relative;
 width: 192px;
 font-size: 28px;
 font-weight: bold;
-color: #ffffff99;
+color: #C4C7C5;
 text-align: center;
 }
 @font-face {
@@ -88,15 +80,16 @@ text-align: center;
 position: relative;
 margin-top: 6px;
 }
-.examp {
+.card {
 flex: 1;
-width: 192px;
-border-radius: 27px;
-background-color: #262626ff;
+width: 182px;
+border-radius: 12px;
+border-color: #8d9199;
+border-width: 2px;
 margin-bottom: 6px;
 flex-direction: column;
 }
-.exampt {
+.t {
 color: white;
 font-size: 24px;
 font-weight: bold;
