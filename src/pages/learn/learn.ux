@@ -1,102 +1,97 @@
 <template>
-    <div class="page">
-        <image src="/common/back.png" class="backbtn"></image>
-        <text class="wordname">{{word.name}}</text>
-        <text class="sound phonetic">{{word.sound}}</text>
-        <div class="card">
-            <text class="t" style="margin-top:10px">{{word.mean}}</text>
-            <text class="t">{{word.examp}}</text>
-        </div>
-        <image src="/common/V.png" style="margin-bottom: 6px" @click='next'></image>
+  <div class="page">
+    <image src="/common/back.png" class="backbtn"></image>
+    <text class="wordname">{{ word.name }}</text>
+    <text class="sound phonetic">{{ word.sound }}</text>
+    <div class="card">
+      <text class="t" style="margin-top: 6px">{{ word.mean }}</text>
     </div>
+    <image src="/common/V.png" style="margin-bottom: 6px" @click="next"></image>
+  </div>
 </template>
 
 <script>
-import file from '@system.file'
-import router from'@system.router'
+import file from "@system.file"
+import router from "@system.router"
 export default {
-    data: {
-        word: {},
-        wordArray: [],
-        currentIndex: 0
-    },
-    onInit(){
-        file.readText({
-      uri: '/common/wordlist/1.txt',
-      success: (data) => {
-        let tex = JSON.parse(data.text);
-        this.wordArray = tex.word;
-        this.currentIndex = 0;
-        this.word = this.wordArray[this.currentIndex];
-      }
-    })
-    },
-    next() {
-    if (this.wordArray && this.currentIndex !== undefined) {
-        this.currentIndex = (this.currentIndex + 1) % this.wordArray.length;
-        this.word = this.wordArray[this.currentIndex];
+  data: {
+    word: {},
+    currentIndex: 0
+  },
+  onInit() {
+    this.word = this.$app.$def.fuckArray[0]
+  },
+  next() {
+    if (this.$app.$def.fuckArray.length > this.currentIndex + 1) {
+      this.currentIndex = this.currentIndex + 1
+      this.word = this.$app.$def.fuckArray[this.currentIndex]
+    } else {
+      console.log("听写")
+      router.push({
+        uri: "/pages/spell"
+      })
     }
+  }
 }
-};
 </script>
 
 <style>
 .wordname {
-position: relative;
-left: 0;
-width: 186px;
-font-size: 32px;
-font-weight: bold;
-color: white;
-text-align: center;
-margin-top: 8px;
+  position: relative;
+  left: 0;
+  width: 186px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-top: 8px;
 }
 .page {
-left: 0px;
-top: 0px;
-width: 192px;
-height: 490px;
-/*background-color: #1A1C1E;*/
-flex-direction: column;
-align-items: center;
-justify-content: space-between;
+  left: 0px;
+  top: 0px;
+  width: 192px;
+  height: 490px;
+  /*background-color: #1A1C1E;*/
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 .sound {
-position: relative;
-width: 192px;
-font-size: 28px;
-font-weight: bold;
-color: #C4C7C5;
-text-align: center;
+  position: relative;
+  width: 192px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #c4c7c5;
+  text-align: center;
 }
 @font-face {
-    font-family: 'DoulosSIL';
-    src: url('/common/font.ttf');
+  font-family: "DoulosSIL";
+  src: url("/common/Doulos_smaller.ttf");
 }
 .phonetic {
-    font-family: 'DoulosSIL';
+  font-family: "DoulosSIL";
 }
 .backbtn {
-position: relative;
-margin-top: 6px;
+  position: relative;
+  margin-top: 6px;
 }
 .card {
-flex: 1;
-width: 182px;
-border-radius: 12px;
-border-color: #8d9199;
-border-width: 2px;
-margin-bottom: 6px;
-flex-direction: column;
+  flex: 1;
+  width: 182px;
+  border-radius: 12px;
+  border-color: #8d9199;
+  border-width: 2px;
+  margin-bottom: 6px;
+  flex-direction: column;
 }
 .t {
-color: white;
-font-size: 24px;
-font-weight: bold;
-margin-top: 6px;
-text-align: left;
-margin-left: 11px;
-word-wrap: break-word;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 6px;
+  text-align: left;
+  margin-left: 8px;
+  margin-right: 8px;
+  word-wrap: break-word;
 }
-
 </style>
