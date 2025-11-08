@@ -1,97 +1,240 @@
 <template>
-  <div class="page">
-    <image src="/common/back.png" class="backbtn"></image>
-    <text class="wordname">{{ word.name }}</text>
-    <text class="sound phonetic">{{ word.sound }}</text>
-    <div class="card">
-      <text class="t" style="margin-top: 6px">{{ word.mean }}</text>
+  <div class="page" @swipe="backk">
+    <!-- 顶部导航 -->
+    <image src="/common/back.png" class="backbtn" style="margin-top: 6px" @click='back'></image>
+    <text class="wordname">{{ word.mean }}</text>
+    <!-- 输入显示区域 -->
+    <div class="input-line" @click="toggleKeyboard">
+      <text style="font-size: 22px;font-weight: bold">{{ input }}</text>
     </div>
-    <image src="/common/V.png" style="margin-bottom: 6px" @click="next"></image>
+    <image src="/common/next.png" style="position: absolute;margin-bottom: 6px;bottom: 12px;" @click="next"></image>
+    <!-- 键盘区域 -->
+    <div class="keyboard-page" show="{{!keyboardHide}}" if="{{keyboardShow}}">
+      <div style="background-color:black">
+        <div if="{{screentype==='pill-shaped'}}" class="keyboard-container">
+          <!-- 键盘布局 -->
+          <scroll static id="keyboard66" scroll-x="{{true}}" style="padding: 0 {{paddingHorizontal}}px;">
+            <div class="keyboard-rows">
+              <div class="keyboard-row row-1">
+                <text class="key-btn" for="{{item in keys['full'][0]}}" @click="onKeySelect(item)">{{item}}</text>
+              </div>
+              <div class="keyboard-row row-2">
+                <text class="key-btn" for="{{item in keys['full'][1]}}" @click="onKeySelect(item)">{{item}}</text>
+              </div>
+              <div class="keyboard-row row-3">
+                <text class="key-btn" for="{{item in keys['full'][2]}}" @click="onKeySelect(item)">{{item}}</text>
+                <img src="/common/arc/space.png" class="space-btn" @click="onSpaceClick" />
+              </div>
+            </div>
+          </scroll>
+          <!-- 控制栏 -->
+          <div class="control-bar">
+            <img src="/common/arc/bigA.png" class="case-btn" @click="onCaseToggle" show="{{upperFlag}}" />
+            <img src="/common/arc/a.png" class="case-btn" @click="onCaseToggle" show="{{!upperFlag}}" />
+            <img static src="/common/arc/del.png" class="delete-btn" @click="onDeleteClick" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
-import file from "@system.file"
+import vibrator from "@system.vibrator";
 import router from "@system.router"
 export default {
   data: {
     word: {},
-    currentIndex: 0
+    currentIndex: 0,
+    keyboardShow: false,
+    keyboardHide: true,
+    input: " "
+    
+    // 键盘相关数据
+    upperFlag: false,
+    screenWidth: 192, // 硬编码屏幕宽度
+    paddingHorizontal: 0, // 硬编码为0，不需要计算
+    screentype: "pill-shaped",
+    keys: {
+      full: [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+        ["Z", "X", "C", "V", "B", "N", "M"],
+      ]
+    },
   },
+  
   onInit() {
     this.word = this.$app.$def.fuckArray[0]
+    // 删除了设备判断和屏幕宽度调整逻辑
   },
+  
+  // 键盘相关方法
+  onKeySelect(key) {
+    this.vibrate();
+    const textToAdd = this.upperFlag ? key.toUpperCase() : key.toLowerCase();
+    this.input += textToAdd;
+  },
+  
+  onDeleteClick() {
+    this.vibrate();
+    if (this.input.length > 0) {
+      this.input = this.input.slice(0, -1);
+    }
+  },
+  
+  onSpaceClick() {
+    this.vibrate();
+    this.input += " ";
+  },
+  
+  onCaseToggle() {
+    this.vibrate();
+    this.upperFlag = !this.upperFlag;
+  },
+  
+  vibrate() {
+    vibrator.vibrate({ mode: 'short' });
+  },
+  
+  // 删除了adjustScreenWidth方法
+  
+  // 页面相关方法
+  toggleKeyboard() {
+  if (!this.keyboardShow) {
+    // 第一次点击：显示并渲染键盘
+    this.keyboardShow = true;
+    this.keyboardHide = false;
+  } else {
+    // 后续点击：仅切换隐藏状态，不重新渲染
+    this.keyboardHide = !this.keyboardHide;
+  }
+},
+  
+  back() {
+    this.keyboardHide = true;
+  },
+  
+  backk(eve) {
+  if (eve.direction === 'right') {
+    // 方法1: 使用back方法返回到指定页面
+    router.back({
+      path: '/pages/index'
+    })
+  }
+},
+  
   next() {
     if (this.$app.$def.fuckArray.length > this.currentIndex + 1) {
       this.currentIndex = this.currentIndex + 1
       this.word = this.$app.$def.fuckArray[this.currentIndex]
     } else {
-      console.log("听写")
-      router.push({
-        uri: "/pages/spell"
-      })
+      router.back({
+      path: '/pages/index'
+    })
     }
-  }
+  }  
 }
 </script>
-
 <style>
-.wordname {
-  position: relative;
-  left: 0;
-  width: 186px;
-  font-size: 32px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  margin-top: 8px;
-}
 .page {
-  left: 0px;
-  top: 0px;
   width: 192px;
   height: 490px;
-  /*background-color: #1A1C1E;*/
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
-.sound {
+.wordname {
   position: relative;
-  width: 192px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #c4c7c5;
-  text-align: center;
-}
-@font-face {
-  font-family: "DoulosSIL";
-  src: url("/common/Doulos_smaller.ttf");
-}
-.phonetic {
-  font-family: "DoulosSIL";
-}
-.backbtn {
-  position: relative;
-  margin-top: 6px;
-}
-.card {
-  flex: 1;
-  width: 182px;
-  border-radius: 12px;
-  border-color: #8d9199;
-  border-width: 2px;
-  margin-bottom: 6px;
-  flex-direction: column;
-}
-.t {
+  left: 0;
+  width: 186px;
+  font-size: 26px;
   color: white;
-  font-size: 24px;
-  font-weight: bold;
+  text-align: center;
   margin-top: 6px;
-  text-align: left;
-  margin-left: 8px;
-  margin-right: 8px;
-  word-wrap: break-word;
+}
+.input-line {
+  height: 54px;
+  width: 180px;
+  background-color: #262626;
+  border: 3px solid rgba(255, 255, 255, 0.06);
+  border-radius: 100%;
+  padding-left: 12px;
+}
+/* 键盘样式 */
+.keyboard-page {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.keyboard-container {
+  width: 100%;
+  height: 245px;
+  position: relative;
+}
+#keyboard66 {
+  position: absolute;
+  left: 0;
+  top: 60px;
+  width: 100%;
+  height: 170px;
+}
+.keyboard-rows {
+  flex-direction: column;
+  left: 3px;
+}
+.keyboard-row {
+  flex-direction: row;
+  height: 60px;
+}
+.row-1 {
+  margin-left: 0;
+  margin-top: 0;
+}
+.row-2 {
+  margin-left: 32px;
+  margin-top: -5px;
+}
+.row-3 {
+  margin-left: 64px;
+  margin-top: -5px;
+}
+.key-btn {
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  font-weight: bold;
+  background-color: rgb(38, 38, 38);
+  margin-right: 3px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  text-align: center;
+  border: 3px solid rgba(255, 255, 255, 0.06);
+}
+.space-btn {
+  width: 60px;
+  height: 60px;
+}
+.control-bar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 192px;
+  height: 60px;
+  margin-left: -96px;
+}
+.case-btn {
+  position: absolute;
+  top: 0;
+  left: 72px;
+  width: 48px;
+  height: 42px;
+}
+.delete-btn {
+  position: absolute;
+  left: 135px;
+  top: 0;
+  width: 48px;
+  height: 42px;
 }
 </style>
