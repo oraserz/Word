@@ -2,14 +2,14 @@
   <div class="page" @swipe="backk">
     <!-- 顶部导航 -->
     <image src="/common/back.png" class="backbtn" style="margin-top: 6px" @click='back'></image>
-    <text class="wordname">{{ word.mean }}</text>
+    <text class="wordshow">{{ word.mean }}</text>
     <!-- 输入显示区域 -->
-    <div class="input-line" @click="toggleKeyboard">
-      <text style="font-size: 22px;font-weight: bold">{{ input }}</text>
+    <div style="flex:1;flex-direction: column; justify-content: flex-start;align-items: center;width: 100%;padding-left: 3px;padding-right: 3px;" @click="toggleKeyboard">
+      <text style="font-size: 28px;font-weight: bold;text-decoration: underline;text-align: center;" >{{ input }}</text>
     </div>
-    <image src="/common/next.png" style="position: absolute;margin-bottom: 6px;bottom: 12px;" @click="next"></image>
+    <image src="/common/next.png" style="position: absolute;bottom: 6px;" @click="next"></image>
     <!-- 键盘区域 -->
-    <div class="keyboard-page" show="{{!keyboardHide}}" if="{{keyboardShow}}">
+    <div class="keyboard-page" show="{{!keyboardHide}}" if="{{keyboardRender}}">
       <div style="background-color:black">
         <div if="{{screentype==='pill-shaped'}}" class="keyboard-container">
           <!-- 键盘布局 -->
@@ -45,11 +45,11 @@ export default {
   data: {
     word: {},
     currentIndex: 0,
-    keyboardShow: false,
+    keyboardRender: false,
     keyboardHide: true,
-    input: " "
-    
-    // 键盘相关数据
+    input: "  ",
+    isFirstInput: true,
+    textcolor: white,
     upperFlag: false,
     screenWidth: 192, // 硬编码屏幕宽度
     paddingHorizontal: 0, // 硬编码为0，不需要计算
@@ -67,18 +67,37 @@ export default {
     this.word = this.$app.$def.fuckArray[0]
     // 删除了设备判断和屏幕宽度调整逻辑
   },
-  
+  onReady(){
+  this.keyboardRender = true;
+  },
   // 键盘相关方法
   onKeySelect(key) {
     this.vibrate();
     const textToAdd = this.upperFlag ? key.toUpperCase() : key.toLowerCase();
-    this.input += textToAdd;
+    
+    // 如果是第一次输入，清空input中的空格
+    if (this.isFirstInput) {
+      this.input = textToAdd;
+      this.isFirstInput = false;
+    } else {
+      this.input += textToAdd;
+    }
   },
   
   onDeleteClick() {
     this.vibrate();
+    
+    // 当有两个空格时，删除键无操作
+    if (this.input === "  ") {
+      return;
+    }
+    
     if (this.input.length > 0) {
       this.input = this.input.slice(0, -1);
+      if (this.input.length === 0) {
+        this.input = "  ";
+        this.isFirstInput = true;
+      }
     }
   },
   
@@ -99,16 +118,20 @@ export default {
   // 删除了adjustScreenWidth方法
   
   // 页面相关方法
-  toggleKeyboard() {
-  if (!this.keyboardShow) {
+  /*toggleKeyboard() {
+  if (!this.keyboardRender) {
     // 第一次点击：显示并渲染键盘
-    this.keyboardShow = true;
+    this.keyboardRender = true;
     this.keyboardHide = false;
   } else {
     // 后续点击：仅切换隐藏状态，不重新渲染
     this.keyboardHide = !this.keyboardHide;
   }
-},
+},*/
+  toggleKeyboard() {
+  this.keyboardHide = !this.keyboardHide;
+  // 如果需要确保键盘已渲染，可以在onInit中设置keyboardRender为true
+  },
   
   back() {
     this.keyboardHide = true;
@@ -128,9 +151,10 @@ export default {
       this.currentIndex = this.currentIndex + 1
       this.word = this.$app.$def.fuckArray[this.currentIndex]
     } else {
-      router.back({
-      path: '/pages/index'
-    })
+      console.log("听写")
+      router.replace({
+        uri: "/pages/spell"
+      })
     }
   }  
 }
@@ -141,24 +165,18 @@ export default {
   height: 490px;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
-.wordname {
+.wordshow {
   position: relative;
   left: 0;
   width: 186px;
-  font-size: 26px;
+  font-size: 22px;
   color: white;
+  margin-top: 20px;
+  text-overflow: ellipsis;
+  lines: 2;
   text-align: center;
-  margin-top: 6px;
-}
-.input-line {
-  height: 54px;
-  width: 180px;
-  background-color: #262626;
-  border: 3px solid rgba(255, 255, 255, 0.06);
-  border-radius: 100%;
-  padding-left: 12px;
 }
 /* 键盘样式 */
 .keyboard-page {
